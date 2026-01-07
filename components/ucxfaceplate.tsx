@@ -144,10 +144,12 @@ const FrontPanelContent = () => {
 
 const UcxFaceplate: React.FC<UcxFaceplateProps> = ({ view = 'front' }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [rotation, setRotation] = useState({ x: -10, y: 25 });
+    // Fixed: Set initial rotation to y: 0 for a straight forward-facing presentation
+    const [rotation, setRotation] = useState({ x: -10, y: 0 });
 
     useEffect(() => {
-        if (view === 'front') setRotation({ x: -10, y: 25 });
+        // Fixed: Ensure front view sets y: 0 for straight alignment
+        if (view === 'front') setRotation({ x: 5, y: -10 });
         else if (view === 'back') setRotation({ x: 0, y: 180 });
         else if (view === 'side') setRotation({ x: 0, y: -90 });
     }, [view]);
@@ -162,7 +164,8 @@ const UcxFaceplate: React.FC<UcxFaceplateProps> = ({ view = 'front' }) => {
         setRotation({ x: -yPct * 30, y: xPct * 30 });
     };
 
-    const handleMouseLeave = () => { if (view === 'front') setRotation({ x: -10, y: 25 }); };
+    // Fixed: Reset to straight front view on mouse leave
+    const handleMouseLeave = () => { if (view === 'front') setRotation({ x: -10, y: 0 }); };
 
     const bezelSize = 330;
     const bodySize = 290;

@@ -86,6 +86,26 @@
       animation: slide-up-fade 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
+    /* Data Flow Line Animation */
+    @keyframes flow-line {
+      0% { stroke-dashoffset: 100; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .animate-flow-line {
+      stroke-dasharray: 10, 10;
+      animation: flow-line 2s linear infinite;
+    }
+
+    @keyframes flow-particle {
+      0% { offset-distance: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    .data-particle {
+      animation: flow-particle 3s linear infinite;
+    }
+
     ::-webkit-scrollbar { display: none; }
   </style>
 <script type="importmap">
