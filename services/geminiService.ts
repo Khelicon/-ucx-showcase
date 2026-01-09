@@ -1,12 +1,24 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-// Always initialize GoogleGenAI with a named parameter using process.env.API_KEY directly
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazy initialization to avoid errors when API key is missing
+let ai: GoogleGenAI | null = null;
+
+function getAIClient() {
+  if (!ai) {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.VITE_API_KEY;
+    if (!apiKey) {
+      throw new Error("Gemini API key not configured");
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+}
 
 export async function fetchGeminiInsights(productName: string) {
   try {
-    const response = await ai.models.generateContent({
+    const client = getAIClient();
+    const response = await client.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Provide 3 futuristic marketing insights or technical advantages for a product named ${productName}. 
       The product is an Advanced Active Power Factor Correction (APFC) system.

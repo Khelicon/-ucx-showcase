@@ -1,45 +1,82 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UCX 5X APFC | Advanced Power Control</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
   <style>
+    html,
+    body,
+    #root {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: #020617;
       color: #f8fafc;
       overflow: hidden;
     }
-    .mono { font-family: 'JetBrains+Mono', monospace; }
-    
+
+    .mono {
+      font-family: 'JetBrains+Mono', monospace;
+    }
+
     /* Custom Animations for TV-like flow */
     @keyframes scroll-left {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
     }
+
     .animate-scroll-left {
       animation: scroll-left 30s linear infinite;
     }
-    
+
     @keyframes pulse-subtle {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
     }
+
     .animate-pulse-subtle {
       animation: pulse-subtle 3s ease-in-out infinite;
     }
 
     @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(100%);
+      }
     }
+
     .scanline {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 50%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
       background: linear-gradient(to bottom, transparent, rgba(245, 158, 11, 0.05), transparent);
       animation: scanline 8s linear infinite;
       pointer-events: none;
@@ -47,68 +84,130 @@
 
     /* New Glitch and Mesh Animations */
     @keyframes glitch-skew {
-      0% { transform: skew(0deg); filter: hue-rotate(0deg); }
-      10% { transform: skew(2deg); filter: hue-rotate(90deg); }
-      11% { transform: skew(0deg); filter: hue-rotate(0deg); }
-      50% { transform: skew(0deg); }
-      51% { transform: skew(-3deg); filter: brightness(1.5); }
-      52% { transform: skew(0deg); filter: brightness(1); }
-      100% { transform: skew(0deg); }
+      0% {
+        transform: skew(0deg);
+        filter: hue-rotate(0deg);
+      }
+
+      10% {
+        transform: skew(2deg);
+        filter: hue-rotate(90deg);
+      }
+
+      11% {
+        transform: skew(0deg);
+        filter: hue-rotate(0deg);
+      }
+
+      50% {
+        transform: skew(0deg);
+      }
+
+      51% {
+        transform: skew(-3deg);
+        filter: brightness(1.5);
+      }
+
+      52% {
+        transform: skew(0deg);
+        filter: brightness(1);
+      }
+
+      100% {
+        transform: skew(0deg);
+      }
     }
+
     .animate-glitch {
       animation: glitch-skew 6s infinite step-end;
     }
 
     @keyframes mesh-move {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(5%, 10%) rotate(5deg); }
-      66% { transform: translate(-5%, 5%) rotate(-5deg); }
-      100% { transform: translate(0, 0) rotate(0deg); }
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      33% {
+        transform: translate(5%, 10%) rotate(5deg);
+      }
+
+      66% {
+        transform: translate(-5%, 5%) rotate(-5deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
     }
+
     .animate-mesh {
       animation: mesh-move 20s ease-in-out infinite;
     }
 
     /* Cinematic Transition Animation */
     @keyframes slide-up-fade {
-      0% { 
-        opacity: 0; 
-        transform: translateY(40px) scale(0.97); 
-        filter: blur(10px); 
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+        filter: blur(10px);
       }
-      100% { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
-        filter: blur(0); 
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
       }
     }
+
     .animate-slide-up-fade {
       animation: slide-up-fade 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     /* Data Flow Line Animation */
     @keyframes flow-line {
-      0% { stroke-dashoffset: 100; }
-      100% { stroke-dashoffset: 0; }
+      0% {
+        stroke-dashoffset: 100;
+      }
+
+      100% {
+        stroke-dashoffset: 0;
+      }
     }
+
     .animate-flow-line {
       stroke-dasharray: 10, 10;
       animation: flow-line 2s linear infinite;
     }
 
     @keyframes flow-particle {
-      0% { offset-distance: 0%; opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { offset-distance: 100%; opacity: 0; }
+      0% {
+        offset-distance: 0%;
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        offset-distance: 100%;
+        opacity: 0;
+      }
     }
+
     .data-particle {
       animation: flow-particle 3s linear infinite;
     }
 
-    ::-webkit-scrollbar { display: none; }
+    ::-webkit-scrollbar {
+      display: none;
+    }
   </style>
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
@@ -120,7 +219,10 @@
 }
 </script>
 </head>
+
 <body>
   <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
